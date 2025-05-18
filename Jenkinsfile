@@ -56,7 +56,7 @@ pipeline {
 	stage('RunDASTUsingZAP') {
           steps {
 		    withKubeConfig([credentialsId: 'kubelogin']) {
-				sh("zap.sh -cmd -quickurl http://\$(kubectl get services/asgbuggy --namespace=devsecops -o json | jq -r '.status.loadBalancer.ingress[0].hostname') -quickprogress -quickout ${WORKSPACE}/zap_report.html")
+				sh '/opt/zap/zap.sh -cmd -quickurl http://a9cb15b00857c44ad98b730d8d72ef2e-1370612809.us-east-2.elb.amazonaws.com -quickprogress -quickout /var/lib/jenkins/workspace/VnDevSecOpsPipeline/zap_report.html'
 				archiveArtifacts artifacts: 'zap_report.html'
 		    }
 	     }
